@@ -5,7 +5,7 @@ This project is meant to teach Vue.js fundamentals by creating a blog, step by s
 Follow these steps to continuously build a client-side Blog web app with [Vue.js](https://vuejs.org/guide/introduction.html).
 
 ## 1. Create project
-1. In your IDE, create a new Vue.js project:
+1. In your IDE, create a new Vue.js project:<br/>
 ![New project](screenshots/New_project.png)
 
 
