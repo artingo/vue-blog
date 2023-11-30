@@ -6,76 +6,75 @@ const drawer = ref(true)
 </script>
 
 <template>
-  <VLayout row wrap rounded rounded-md align-start>
-    <VAppBar rounded class="transparent">
-      <VAppBarNavIcon variant="text" @click.stop="drawer = !drawer"/>
-      <VToolbarTitle>Travel Blog</VToolbarTitle>
+  <v-layout>
+    <v-app-bar rounded class="transparent">
+      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"/>
+      <v-toolbar-title>Travel Blog</v-toolbar-title>
 
-      <VSpacer></VSpacer>
-      <VBtn variant="text" icon="mdi-magnify"></VBtn>
-      <VBtn variant="text" icon>
-        <VIcon>mdi-filter</VIcon>
-        <VMenu activator="parent">
-          <VList density="compact">
-            <VListItem>Attractions</VListItem>
-            <VListItem>Beaches</VListItem>
-            <VListItem>Cities</VListItem>
-            <VListItem>Escape Rooms</VListItem>
-            <VListItem>Mountains</VListItem>
-            <VListItem>Museums</VListItem>
-          </VList>
-        </VMenu>
-      </VBtn>
+      <v-spacer/>
+      <v-btn variant="text" icon="mdi-magnify"></v-btn>
+      <v-btn variant="text" icon>
+        <v-icon>mdi-filter</v-icon>
+        <v-menu activator="parent">
+          <v-list density="compact">
+            <v-list-item>Attractions</v-list-item>
+            <v-list-item>Beaches</v-list-item>
+            <v-list-item>Cities</v-list-item>
+            <v-list-item>Escape Rooms</v-list-item>
+            <v-list-item>Mountains</v-list-item>
+            <v-list-item>Museums</v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
 
-      <VBtn variant="text" icon>
-        <VIcon>mdi-dots-vertical</VIcon>
-        <VMenu activator="parent">
-          <VList density="compact">
-            <VListItem>Profile</VListItem>
-            <VListItem>Settings</VListItem>
-          </VList>
-        </VMenu>
-      </VBtn>
-    </VAppBar>
+      <v-btn variant="text" icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+        <v-menu activator="parent">
+          <v-list density="compact">
+            <v-list-item>Profile</v-list-item>
+            <v-list-item>Settings</v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
+    </v-app-bar>
 
-    <VBottomNavigation grow >
-      <VBtn size="large" link to="/users">
-        <VIcon>mdi-account-multiple</VIcon>
-        Users
-      </VBtn>
-      <VBtn size="large" link to="/posts">
-        <VIcon>mdi-note-plus</VIcon>
-        Posts
-      </VBtn>
-      <VBtn size="large" link to="/categories">
-        <VIcon>mdi-shape</VIcon>
-        Categories
-      </VBtn>
-    </VBottomNavigation>
-
-    <VNavigationDrawer mobile-breakpoint="sm" v-model="drawer" class="transparent">
-      <VList>
-        <VListItem :prepend-icon="BlogIcon" link to="/posts">
+    <v-navigation-drawer mobile-breakpoint="sm" v-model="drawer" class="transparent">
+      <v-list>
+        <v-list-item :prepend-icon="BlogIcon" link to="/posts">
           Posts
-        </VListItem>
-        <VListItem prepend-icon="mdi-shape" link to="/categories">
+        </v-list-item>
+        <v-list-item prepend-icon="mdi-shape" link to="/categories">
           Categories
-        </VListItem>
-        <VListItem prepend-icon="mdi-account-multiple" link to="/users">
+        </v-list-item>
+        <v-list-item prepend-icon="mdi-account-multiple" link to="/users">
           Users
-        </VListItem>
-      </VList>
-    </VNavigationDrawer>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-    <VMain>
-      <RouterView></RouterView>
-    </VMain>
-    <VBtn link to="/posts/create"
-          variant="elevated" icon="mdi-plus" color="indigo-darken-4"
-          position="fixed" size="large" style="bottom:5em; right:3em">
-    </VBtn>
+    <v-main class="fluid">
+        <RouterView/>
 
+      <v-btn link to="/posts/create"
+             variant="elevated" icon="mdi-plus" color="indigo-darken-4"
+             position="fixed" size="large" style="bottom:4em; right:2em">
+      </v-btn>
+    </v-main>
 
-  </VLayout>
+    <v-bottom-navigation grow class="hidden-sm-and-up">
+      <v-btn size="large" link to="/users">
+        <v-icon>mdi-account-multiple</v-icon>
+        Users
+      </v-btn>
+      <v-btn size="large" link to="/posts">
+        <v-icon>mdi-note-plus</v-icon>
+        Posts
+      </v-btn>
+      <v-btn size="large" link to="/categories">
+        <v-icon>mdi-shape</v-icon>
+        Categories
+      </v-btn>
+    </v-bottom-navigation>
+  </v-layout>
 </template>
 

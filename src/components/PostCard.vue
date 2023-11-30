@@ -1,5 +1,9 @@
 <script setup>
-const props = defineProps(['title'])
+const props = defineProps([
+    'title',
+    'subtitle',
+    'avatar',
+])
 </script>
 
 <template>
@@ -7,17 +11,27 @@ const props = defineProps(['title'])
       class="mx-auto"
       max-width="280"
       :title="props.title"
-      subtitle="Freddie on 2023-11-15, 05:15"
+      :subtitle="props.subtitle"
   >
     <template v-slot:prepend>
       <VAvatar >
-        <VImg src="/user1-128x128.jpg" alt="Freddie"/>
+        <VImg :src="avatar" alt="Avatar"/>
       </VAvatar>
     </template>
 <!--        <v-badge content="Beaches" color="error"/>-->
     <VDivider/>
     <VCardText>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
+      <slot>Lorum ipsum</slot>
     </VCardText>
   </VCard>
 </template>
+
+<style>
+.v-card {
+  height: 12rem;
+}
+.v-card-text {
+  overflow: hidden;
+  padding-bottom: 1em;
+}
+</style>

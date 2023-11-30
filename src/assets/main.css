@@ -1,11 +1,11 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+.transparent {
+  opacity: 0.6;
+}
+.poster {
+  background-image: url(https://picsum.photos/seed/picsum/1920/1080);
+  background-size: cover;
 }
 
 a,
@@ -28,8 +28,6 @@ a,
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
 }
