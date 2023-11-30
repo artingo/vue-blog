@@ -38,7 +38,7 @@ const drawer = ref(true)
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer mobile-breakpoint="sm" v-model="drawer" class="transparent">
+    <v-navigation-drawer mobile-breakpoint="md" v-model="drawer" class="transparent">
       <v-list>
         <v-list-item :prepend-icon="BlogIcon" link to="/posts">
           Posts

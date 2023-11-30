@@ -1,35 +1,28 @@
 <script setup>
-const props = defineProps([
-    'title',
-    'subtitle',
-    'avatar',
-])
+const props = defineProps(['title', 'subtitle', 'avatar'])
 </script>
 
 <template>
-  <VCard
-      class="mx-auto"
-      max-width="280"
+  <v-card class="mx-auto" max-width="280"
       :title="props.title"
-      :subtitle="props.subtitle"
-  >
+      :subtitle="props.subtitle">
     <template v-slot:prepend>
-      <VAvatar >
-        <VImg :src="avatar" alt="Avatar"/>
-      </VAvatar>
+      <v-avatar>
+        <v-img :src="avatar" alt="Avatar"/>
+      </v-avatar>
     </template>
-<!--        <v-badge content="Beaches" color="error"/>-->
-    <VDivider/>
-    <VCardText>
+    <v-divider/>
+    <v-card-text>
       <slot>Lorum ipsum</slot>
-    </VCardText>
-  </VCard>
+    </v-card-text>
+  </v-card>
 </template>
 
 <style>
 .v-card {
   height: 12rem;
 }
+
 .v-card-text {
   overflow: hidden;
   padding-bottom: 1em;

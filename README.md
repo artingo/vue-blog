@@ -15,12 +15,6 @@ Follow these steps to continuously build a client-side Blog web app with [Vue.js
 
 3. Create the application routes in [`src/router/index.js`](src/router/index.js):
 ```javascript
-import Overview from "@/views/posts/Overview.vue";
-import Users from "@/views/Users.vue";
-import Categories from "@/views/Categories.vue";
-import Read from "@/views/posts/Read.vue";
-import Create from "@/views/posts/Create.vue";
-
 const routes = [
   {path: '/', component: Overview},
   {path: '/posts', component: Overview},
@@ -31,13 +25,35 @@ const routes = [
   {path: '/posts/delete', component: Overview},
   {path: '/categories', component: Categories},
   {path: '/users', component: Users},
-];
-export default routes;
+]
 ```
 
 4. Create and mount all necessary plugins and Vue in `main.js`:
 ![main.js code](screenshots/Main_code.png)
 
+
+## 2. Add props to `PostCard`
+1. To add `props` to the [`PostCard`](src/components/PostCard.vue) component, insert the following code:
+```javascript
+const props = defineProps(['title', 'subtitle', 'avatar'])
+```
+2. In [`Overview`](src/views/posts/Overview.vue), create some test PostCards and pass the proper `props`.
+```javascript
+const avatars = ref([
+'/female_avatar.jpeg',
+'/male_avatar.png',
+'/user1-128x128.jpg',
+])
+```
+```vue
+<v-col v-for="i in 9" :key="i" cols="auto">
+  <PostCard :title="'Post no ' + i"
+    :subtitle="'Freddie on ' + new Date().toDateString()"
+    :avatar="avatars[i % 3]">
+      Lorum ipsum...
+  </PostCard>
+</v-col>
+```
 
 
 ### Project Setup
