@@ -28,7 +28,7 @@ const routes = [
 ]
 ```
 
-4. Create and mount all necessary plugins and Vue in `main.js`:
+4. Create and mount all necessary plugins and Vue in `main.js`:<br/>
 ![main.js code](screenshots/Main_code.png)
 
 
@@ -54,6 +54,28 @@ const avatars = ref([
   </PostCard>
 </v-col>
 ```
+
+## 3. 'Create post' view
+![Create post screenshot](screenshots/Create_post.png)
+
+
+1. In [`Create`](src/views/posts/Create.vue), add these form fields:
+```vue
+<v-text-field label="Title"  v-model="title" :rules="titleRules" required/>
+<v-select label="Categories" v-model="categories" multiple
+  :items="['Attractions', 'Beaches', 'Cities', 'Escape Rooms', 'Mountains', 'Museums']">
+</v-select>
+<v-textarea label="Content" v-model="body" :rules="bodyRules"></v-textarea>
+```
+2. Add some model variables and validation rules:
+```javascript
+const title = ref('')
+const titleRules = [(value) => value ? true : 'Please enter a post title']
+const categories = ref([])
+const body = ref('')
+const bodyRules = [(value) => value ? true : 'Please enter some post content']
+```
+
 
 
 ### Project Setup

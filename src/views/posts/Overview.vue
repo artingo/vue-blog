@@ -13,7 +13,7 @@ const avatars = ref([
   <v-container>
     <h1>Posts overview</h1>
     <v-row>
-      <v-col v-for="i in 9" :key="i" cols="auto" >
+      <v-col v-for="i in 9" :key="i" cols="auto">
         <PostCard :title="'Post no ' + i"
                   :subtitle="'Freddie on ' + new Date().toDateString()"
                   :avatar="avatars[i % 3]">
