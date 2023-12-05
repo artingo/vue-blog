@@ -59,7 +59,7 @@ const avatars = ref([
 ![Create post screenshot](screenshots/Create_post.png)
 
 
-1. In [`Create`](src/views/posts/Create.vue), add these form fields:
+1. In [`Create`](src/views/posts/Edit.vue), add these form fields:
 ```vue
 <v-text-field label="Title"  v-model="title" :rules="titleRules" required/>
 <v-select label="Categories" v-model="categories" multiple
@@ -76,6 +76,30 @@ const body = ref('')
 const bodyRules = [(value) => value ? true : 'Please enter some post content']
 ```
 
+## 4. Load test postings from [`FireBase`](https://firebase.google.com/docs/web/setup)
+1. Follow [these steps](https://firebase.google.com/docs/web/setup) to connect your web app with `FireBase`.
+2. Create [`db.js`](src/db.js) a file, where you initialize your FireBase connecttion.
+```javascript
+...
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
+export default db
+```
+3. Create a new `FireStore` database, a collection named 'posts' and some test documents.<br/>
+![FireStore collection](screenshots/FireStore_collection.png)
+
+4. In `Overview`, load the `FireStore` data in the `onMounted` hook and store the postings in the `posts` variable:
+```javascript
+const posts = ref([])
+
+onMounted(async () => await loadPostings())
+
+async function loadPostings() {
+  const postings = await getDocs(collection(db, "posts"))
+  ...
+  posts.value.push(currentPost)
+}
+```
 
 
 ### Project Setup
