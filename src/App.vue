@@ -1,7 +1,8 @@
 <script setup>
-import BlogIcon from "@/components/icons/IconBlog.vue";
-import {ref} from 'vue'
+import BlogIcon from "@/components/icons/IconBlog.vue"
+import {inject, ref} from 'vue'
 
+const categories = inject('categories')
 const drawer = ref(true)
 </script>
 
@@ -17,12 +18,9 @@ const drawer = ref(true)
         <v-icon>mdi-filter</v-icon>
         <v-menu activator="parent">
           <v-list density="compact">
-            <v-list-item>Attractions</v-list-item>
-            <v-list-item>Beaches</v-list-item>
-            <v-list-item>Cities</v-list-item>
-            <v-list-item>Escape Rooms</v-list-item>
-            <v-list-item>Mountains</v-list-item>
-            <v-list-item>Museums</v-list-item>
+            <v-list-item v-for="category in categories">
+              {{ category }}
+            </v-list-item>
           </v-list>
         </v-menu>
       </v-btn>

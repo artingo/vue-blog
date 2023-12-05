@@ -101,6 +101,46 @@ async function loadPostings() {
 }
 ```
 
+## 5. Load categories from `FireStore`
+1. In [`main.js`](src/main.js), load the categories from `FireStore`:
+```javascript
+async function loadCategories() {
+  const catCollection = await getDocs(collection(db, "categories"))
+  ...
+}
+```
+2. [Provide](https://vuejs.org/guide/components/provide-inject) them to all Vue components:
+```javascript
+app.provide('categories', await loadCategories())
+```
+3. In [`App`](src/App.vue), inject and use them as list items:
+```vue
+const categories = inject('categories')
+...
+<v-list-item v-for="category in categories">
+  {{ category }}
+</v-list-item>
+
+```
+4. In [`Overview`](src/views/posts/Overview.vue), pass the whole `post` object instead of `title` and `body`:
+```vue
+<PostCard :post="post" />
+```
+5. In [`PostCard`](src/components/PostCard.vue), replace `title` and `body` with `props.post`.
+```vue
+<v-card link :to="'/posts/' + props.post.id"
+  :title="props.post.title" :subtitle="subtitle">
+```
+6. Inject the global `categories` and create a [computed property](https://vuejs.org/guide/essentials/computed.html) to 
+display the post's categories:
+```javascript
+const categories = inject('categories')
+const subtitle = computed(() => {
+  const cats = props.post.categories?.map(cat => categories[cat])
+  return cats?.join(', ')
+})
+```
+
 
 ### Project Setup
 ```sh

@@ -20,6 +20,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import {aliases, mdi} from "vuetify/lib/iconsets/mdi"
 import colors from 'vuetify/util/colors'
+import {collection, getDocs} from "firebase/firestore";
+import db from "@/db";
 
 const vuetify = createVuetify({
   components,
@@ -47,4 +49,15 @@ const vuetify = createVuetify({
 const app = createApp(App)
 app.use(router)
 app.use(vuetify)
+
+app.provide('categories', await loadCategories())
 app.mount('#app')
+
+
+async function loadCategories() {
+  const categories ={}
+  const catCollection = await getDocs(collection(db, "categories"))
+  catCollection.forEach(cat => categories[cat.id] = cat.data()?.name)
+  return categories
+}
+

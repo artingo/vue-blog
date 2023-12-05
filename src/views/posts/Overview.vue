@@ -34,9 +34,7 @@ async function loadPostings() {
     <h1>Posts overview</h1>
     <v-row id="overview">
       <v-col v-for="post,i in posts" :key="i" cols="auto">
-        <PostCard :post="post" :avatar="avatars[i % 3]">
-          {{ post.body }}
-        </PostCard>
+        <PostCard :post="post" :avatar="avatars[i % 3]"/>
       </v-col>
     </v-row>
   </v-container>
