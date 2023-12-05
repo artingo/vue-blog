@@ -82,11 +82,11 @@ async function deletePost(id) {
                 </v-card>
               </template>
             </v-dialog>
+-->
 
             <v-btn color="primary" variant="elevated" link :to="'/posts/edit/'+props.id">
               Edit
             </v-btn>
--->
             <v-col class="text-right">
               <v-btn color="grey-darken-1" variant="elevated" link to="/posts">
                 Close

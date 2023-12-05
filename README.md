@@ -67,7 +67,7 @@ const avatars = ref([
 </v-select>
 <v-textarea label="Content" v-model="body" :rules="bodyRules"></v-textarea>
 ```
-2. Add some model variables and validation rules:
+2. Add some model states and validation rules:
 ```javascript
 const title = ref('')
 const titleRules = [(value) => value ? true : 'Please enter a post title']
@@ -88,7 +88,7 @@ export default db
 3. Create a new `FireStore` database, a collection named 'posts' and some test documents.<br/>
 ![FireStore collection](screenshots/FireStore_collection.png)
 
-4. In `Overview`, load the `FireStore` data in the `onMounted` hook and store the postings in the `posts` variable:
+4. In `Overview`, load the `FireStore` data in the `onMounted` hook and store the postings in the `posts` state:
 ```javascript
 const posts = ref([])
 
@@ -147,7 +147,7 @@ const subtitle = computed(() => {
 
 1. In the [routes](src/router/index.js), enable [dynamic route parameters](https://router.vuejs.org/guide/essentials/passing-props):
 ```javascript
-{path: '/posts/:id', component: Read, props: true},
+{path: '/posts/:id', component: Read, props: true}
 ```
 2. In [`PostCard`](src/components/PostCard.vue), add a dynamic link with the `post.id`.
 ```vue
@@ -179,6 +179,71 @@ async function loadPost(id) {
   </v-card>
 </template>
 ```
+
+## 7. 'Edit post' feature
+![Detail view](screenshots/Edit_button.png)
+
+1. In the [routes](src/router/index.js), enable [dynamic route parameters](https://router.vuejs.org/guide/essentials/passing-props):
+```javascript
+{path: '/posts/edit/:id', component: Edit, props: true}
+```
+2. In [`Read`](src/views/posts/Read.vue), add a button with a link containing the `post.id`.
+```vue
+<v-btn color="primary" variant="elevated" link :to="'/posts/edit/' + props.id">
+  Edit
+</v-btn>
+```
+3. Rename `Create.vue` to [`Edit.vue`](src/views/posts/Edit.vue).
+4. For an existing post, load it's data using the ID:
+```javascript
+onMounted(async () => {
+  // only execute for existing posting
+  if (props.id) await loadPost(props.id)
+})
+
+async function loadPost(id) {
+  const post = await getDoc(doc(db, "posts", id))
+  if (post.exists()) {
+    isNewDoc.value = false
+    title.value = post.data().title
+    body.value = post.data().body
+    categories.value = post.data().categories?.map(cat => cat.id)
+  }
+}
+```
+5. The form should now look like this:<br/>
+![Edit post form](screenshots/Posting_form.png)
+<p></p>
+
+6. Write a `savePost()` function that stores the form data in FireStore:
+```javascript
+async function savePost() {
+    // if there is a validation error, abort
+    if (!isValid.value) return false
+
+    // load the FireStore references for selected categories
+    const selectedCategories = categories.value?.map(catRef => doc(db, 'categories', catRef))
+    const newPost = {
+        title: title.value,
+        body: body.value,
+        categories: selectedCategories
+    }
+    const coll = collection(db, "posts")
+    
+    if (isNewDoc.value) {
+        // create a new Posting in FireStore
+        await addDoc(coll, newPost)
+    } else {
+        // update the existing Posting in FireStore
+        await setDoc(doc(coll, props.id), newPost)
+    }
+    
+    // forward to overview page
+    router.push('/posts')
+}
+```
+
+
 
 
 
