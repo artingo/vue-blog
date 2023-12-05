@@ -1,11 +1,19 @@
 <script setup>
-const props = defineProps(['title', 'subtitle', 'avatar'])
+import {computed, inject} from "vue"
+
+const props = defineProps(['post', 'avatar'])
+const categories = inject('categories')
+const subtitle = computed(() => {
+  // collect the category names
+  const cats = props.post.categories?.map(cat => categories[cat])
+  return cats?.join(', ')
+})
 </script>
 
 <template>
-  <v-card class="mx-auto" max-width="280"
-      :title="props.title"
-      :subtitle="props.subtitle">
+  <v-card class="mx-auto" width="280" link :to="'/posts/' + props.post.id"
+          :title="props.post.title"
+          :subtitle="subtitle">
     <template v-slot:prepend>
       <v-avatar>
         <v-img :src="avatar" alt="Avatar"/>
@@ -13,18 +21,19 @@ const props = defineProps(['title', 'subtitle', 'avatar'])
     </template>
     <v-divider/>
     <v-card-text>
-      <slot>Lorum ipsum</slot>
+      {{ post.body }}
     </v-card-text>
   </v-card>
 </template>
 
 <style>
-.v-card {
-  height: 12rem;
+#overview .v-card {
+  height: 100%;
 }
 
-.v-card-text {
+#overview .v-card-text {
+  height: 11rem;
   overflow: hidden;
-  padding-bottom: 1em;
+  margin-bottom: 1.2em;
 }
 </style>
