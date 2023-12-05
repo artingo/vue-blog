@@ -56,7 +56,6 @@ async function deletePost(id) {
           </v-card-text>
 
           <v-card-actions>
-<!--
             <v-dialog width="auto">
               <template v-slot:activator="{ props }">
                 <v-btn color="red-darken-4" variant="elevated" v-bind="props">Delete</v-btn>
@@ -82,7 +81,6 @@ async function deletePost(id) {
                 </v-card>
               </template>
             </v-dialog>
--->
 
             <v-btn color="primary" variant="elevated" link :to="'/posts/edit/'+props.id">
               Edit

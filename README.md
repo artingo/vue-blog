@@ -243,9 +243,52 @@ async function savePost() {
 }
 ```
 
+## 8. 'Delete post' feature
+![Delete button](screenshots/Delete_button.png)
 
+1. In [`Read`](src/views/posts/Read.vue), add a delete button:
+```vue
+<v-btn color="red-darken-4" variant="elevated" v-bind="props">
+  Delete
+</v-btn>
+```
 
+2. Create a confirmation dialog:<br/>
+![Delete confirm dialog](screenshots/Delete_confirmation.png)
+```vue
+<v-dialog width="auto">
+  <template v-slot:default="{ isActive }">
+    <v-card>
+      <v-toolbar color="red-darken-4" title="Delete posting"/>
+      <v-card-text>
+        <div class="text-h4 pa-8">
+          Are you sure that you<br/>
+          want to delete this post?
+        </div>
+      </v-card-text>
+      <v-card-actions class="justify-space-between">
+        <v-btn variant="elevated" color="grey-darken-1"
+           @click="isActive.value = false">
+          Cancel
+        </v-btn>
+        <v-btn variant="elevated" color="red-darken-4"
+           @click="deletePost(props.id)">
+          Yes, delete
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </template>
+</v-dialog>
+```
 
+3. Write a `deletePost()` function that deletes the posting in FireStore:
+```javascript
+async function deletePost(id) {
+    await deleteDoc(doc(db, "posts", id))
+    // forward to overview page
+    router.push('/posts')
+}
+```
 
 
 ### Project Setup
