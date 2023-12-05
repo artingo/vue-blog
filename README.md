@@ -102,7 +102,7 @@ async function loadPostings() {
 ```
 
 ## 5. Load categories from `FireStore`
-<img src="screenshots/Categories_list.png" alt="Detail view" style="float:left; margin:0 1rem 0.5rem 0">
+<img src="screenshots/Categories_list.png" alt="Detail view" align="left" hspace="10">
 
 1. In [`main.js`](src/main.js), load the categories from `FireStore`:
 ```javascript
@@ -141,6 +141,46 @@ const subtitle = computed(() => {
   return cats?.join(', ')
 })
 ```
+
+## 6. 'Show details' feature
+![Detail view](screenshots/Detail_view.png)
+
+1. In the [routes](src/router/index.js), enable [dynamic route parameters](https://router.vuejs.org/guide/essentials/passing-props):
+```javascript
+{path: '/posts/:id', component: Read, props: true},
+```
+2. In [`PostCard`](src/components/PostCard.vue), add a dynamic link with the `post.id`.
+```vue
+<v-card ... link :to="'/posts/' + props.post.id">
+```
+3. In [`Read`](src/views/posts/Read.vue), implement the posting 'detail view':
+```javascript
+<script setup>
+const props = defineProps(['id'])
+const post = ref({})
+
+onMounted(async () => await loadPost(props.id))
+
+async function loadPost(id) {
+  const postDoc = await getDoc(doc(db, "posts", id))
+  ...
+  post.value = {...postDoc.data()}
+}
+</script>
+```
+```vue
+<template>
+  ...
+  <v-card :title="post.title" :subtitle="subtitle">
+    ...
+    <v-card-text>
+      {{ post.body }}
+    </v-card-text>
+  </v-card>
+</template>
+```
+
+
 
 
 ### Project Setup
